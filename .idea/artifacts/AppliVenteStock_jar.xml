@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="AppliVenteStock:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AppliVenteStock_jar</output-path>
+    <root id="archive" name="AppliVenteStock.jar">
+      <element id="module-output" name="FrenchChic" />
+    </root>
+  </artifact>
+</component>
