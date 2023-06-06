@@ -7,6 +7,8 @@ public class Produit {
     private float prix;
     private boolean estDuJour;
 
+    private boolean estDeLaSemaine;
+
     private int quantiteEnStock;
     private static Produit[] lesProduits;
 
@@ -55,9 +57,9 @@ public class Produit {
     }
 
     public static void initializeProduits(){
-        Produit prod1 = new Produit("PROD_1","BANANE",12,true,200);
-        Produit prod2 = new Produit("PROD_2","FRAISE",24,false,500);
-        Produit prod3 = new Produit("PROD_3","CAROTTE",27,false,600);
+        Produit prod1 = new Produit("PROD_1","BANANE",12,true,200,false);
+        Produit prod2 = new Produit("PROD_2","FRAISE",24,false,500,false);
+        Produit prod3 = new Produit("PROD_3","CAROTTE",27,false,600,true);
 
         Produit[] liste = new Produit[3];
         liste[0] = prod1;
@@ -69,17 +71,28 @@ public class Produit {
 
     }
 
-    public Produit(String reference, String libelle, float prix, boolean estDuJour, int quantiteEnStock) {
+    public Produit(String reference, String libelle, float prix, boolean estDuJour, int quantiteEnStock, boolean estDeLaSemaine) {
         this.reference = reference;
         this.libelle = libelle;
         this.prix = prix;
         this.estDuJour = estDuJour;
         this.quantiteEnStock = quantiteEnStock;
+        this.estDeLaSemaine = estDeLaSemaine;
+
     }
 
     public static Produit rechercherProduitDuJour(){
         for(int i=0;i<lesProduits.length;i++){
             if(lesProduits[i].estDuJour){
+                return lesProduits[i];
+            }
+        }
+        return null;
+    }
+
+    public static Produit rechercherProduitDelaSemaine(){
+        for(int i=0;i<lesProduits.length;i++){
+            if(lesProduits[i].estDeLaSemaine){
                 return lesProduits[i];
             }
         }

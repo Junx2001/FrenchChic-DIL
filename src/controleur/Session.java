@@ -14,9 +14,11 @@ public class Session {
         TraiterIdentificationReponse trait = new TraiterIdentificationReponse(EnumTypeEcran.ECRAN_ACCUEIL_PERSO);
         Client cli = Client.rechercherClientParPseudo(pseudo,mdp);
         Produit pro = Produit.rechercherProduitDuJour();
+        Produit proSem = Produit.rechercherProduitDelaSemaine();
         if(cli!=null && pro!=null){
             trait.leClient = cli;
             trait.leProduit = pro;
+            trait.leProduitSemaine = proSem;
 
         }
 

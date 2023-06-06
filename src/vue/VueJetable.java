@@ -98,7 +98,7 @@ public class VueJetable {
                 TraiterIdentificationReponse reponse = laSession.traiterIdentification(pseudoField.getText(), mdpField.getText());
                 frame.setVisible(false);
                 if (reponse.typeEcran == EnumTypeEcran.ECRAN_ACCUEIL_PERSO) {
-                    afficherEcranAccueilPerso(reponse.leClient, reponse.leProduit);
+                    afficherEcranAccueilPerso(reponse.leClient, reponse.leProduit, reponse.leProduitSemaine);
                 }
             }
         });
@@ -113,10 +113,10 @@ public class VueJetable {
 
     }
 
-    private static void afficherEcranAccueilPerso(final Client client, final Produit produit) {
+    private static void afficherEcranAccueilPerso(final Client client, final Produit produit, final Produit produitSem) {
         frame = new JFrame();
         frame.setTitle("French Chic - Produit du jour");
-        frame.setSize(650, 500);
+        frame.setSize(850, 700);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
@@ -135,6 +135,9 @@ public class VueJetable {
         JLabel bonjourTexte = null;
         JLabel produitDuJourTexte = null;
         JLabel quantiteLabel = null;
+
+        JLabel produitDeLaSemaineTexte = null;
+        JLabel quantiteSemLabel = null;
 
         String bonjourTxt = "Bonjour " + client.getPrenom() + " " + client.getNom();
         bonjourTexte = new JLabel(bonjourTxt);
@@ -177,12 +180,51 @@ public class VueJetable {
             }
         });
 
+        String produitTxtSem = "Le produit de la semaine est le \"" + produitSem.getLibelle() + "\" au prix de " + produitSem.getPrix() + " Euros";
+        produitDeLaSemaineTexte = new JLabel(produitTxtSem);
+        produitDeLaSemaineTexte.setSize(500, 20);
+        produitDeLaSemaineTexte.setLocation(150, 450);
+
+        quantiteSemLabel = new JLabel("Quantite");
+        quantiteSemLabel.setSize(120, 20);
+        quantiteSemLabel.setLocation(250, 525);
+
+
+        final JTextField quantiteFieldSem;
+
+        quantiteFieldSem = new JTextField();
+        quantiteFieldSem.setSize(longueur, largeur);
+        quantiteFieldSem.setLocation(320, 520);
+        quantiteFieldSem.setSize(50, largeur);
+
+        JButton ajouterProduitSem = new JButton("Ajouter le produit de la semaine au panier");
+        ajouterProduitSem.setLocation(250, 570);
+        ajouterProduitSem.setSize(longueur, largeur);
+
+        ajouterProduitSem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // TODO Auto-generated method stub
+                Integer intg = new Integer(quantiteFieldSem.getText());
+                TraiterAjoutPanierReponse reponse = laSession.traiterAjoutPanier(produitSem, intg);
+                frame.setVisible(false);
+                if (reponse.typeEcran == EnumTypeEcran.ECRAN_PANIER) {
+                    afficherEcranPanier(reponse.laCommande);
+                }
+            }
+        });
+
         frame.add(title);
         frame.add(bonjourTexte);
         frame.add(produitDuJourTexte);
         frame.add(quantiteField);
         frame.add(quantiteLabel);
         frame.add(ajouterProduit);
+
+        frame.add(produitDeLaSemaineTexte);
+        frame.add(quantiteFieldSem);
+        frame.add(quantiteSemLabel);
+        frame.add(ajouterProduitSem);
         frame.setVisible(true);
     }
 
@@ -229,9 +271,9 @@ public class VueJetable {
 
         JLabel montantLabel = null;
 
-        montantLabel = new JLabel("Montant panier");
-        montantLabel.setSize(120, 20);
-        montantLabel.setLocation(250, 423);
+        montantLabel = new JLabel("Montant panier : ");
+        montantLabel.setSize(140, 20);
+        montantLabel.setLocation(200, 423);
 
         int longueur = 200;
         int largeur = 30;
