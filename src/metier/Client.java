@@ -11,9 +11,9 @@ public class Client {
     private static Client[] lesClients;
 
     public static void initializeClients(){
-        Client john = new Client("CLI_1","JOHN","WICK","john123","motdepasse");
-        Client linda = new Client("CLI_2","LINDA","SWAIN","lindouer","motdepasse");
-        Client maggy = new Client("CLI_3","MAGGY","BENZ","mag5r","motdepasse");
+        Client john = new Client("CLI_1","Stephen","Curry","Threeshooter","goldenState!");
+        Client linda = new Client("CLI_2","Blake","Griffin","GiantDunker","Clippers12");
+        Client maggy = new Client("CLI_3","Lebron","James","TheKing","Lakers#1");
 
         Client[] liste = new Client[3];
         liste[0] = john;

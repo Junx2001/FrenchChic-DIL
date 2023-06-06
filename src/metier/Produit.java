@@ -57,9 +57,9 @@ public class Produit {
     }
 
     public static void initializeProduits(){
-        Produit prod1 = new Produit("PROD_1","BANANE",12,true,200,false);
-        Produit prod2 = new Produit("PROD_2","FRAISE",24,false,500,false);
-        Produit prod3 = new Produit("PROD_3","CAROTTE",27,false,600,true);
+        Produit prod1 = new Produit("PROD_1","Air Jordan 1",750,true,10,false);
+        Produit prod2 = new Produit("PROD_2","Iphone 13 pro max",1500,false,5,false);
+        Produit prod3 = new Produit("PROD_3","Sweat Shirt Nike",250,false,15,true);
 
         Produit[] liste = new Produit[3];
         liste[0] = prod1;
