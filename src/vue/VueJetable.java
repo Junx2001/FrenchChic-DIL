@@ -146,7 +146,7 @@ public class VueJetable {
 
         String produitTxt = "Le produit du jour est le \"" + produit.getLibelle() + "\" au prix de " + produit.getPrix() + " Euros";
         produitDuJourTexte = new JLabel(produitTxt);
-        produitDuJourTexte.setSize(500, 20);
+        produitDuJourTexte.setSize(800, 20);
         produitDuJourTexte.setLocation(150, 250);
 
         quantiteLabel = new JLabel("Quantite");
@@ -182,7 +182,7 @@ public class VueJetable {
 
         String produitTxtSem = "Le produit de la semaine est le \"" + produitSem.getLibelle() + "\" au prix de " + produitSem.getPrix() + " Euros";
         produitDeLaSemaineTexte = new JLabel(produitTxtSem);
-        produitDeLaSemaineTexte.setSize(500, 20);
+        produitDeLaSemaineTexte.setSize(800, 20);
         produitDeLaSemaineTexte.setLocation(150, 450);
 
         quantiteSemLabel = new JLabel("Quantite");
