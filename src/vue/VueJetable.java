@@ -201,7 +201,7 @@ public class VueJetable {
         titreProduitJour.setLocation(70, 195);
         titreProduitJour.setFont(f);
 
-        String produitTxt = "Le produit du jour est le \"" + produit.getLibelle() + "\" au prix de " + produit.getPrix() + " Euros";
+        String produitTxt = "Le produit du jour est le \"" + produit.getLibelle() + "\" au prix de " + produit.getPrix() + " €";
         produitDuJourTexte = new JLabel(produitTxt);
         produitDuJourTexte.setSize(1000, 50);
         produitDuJourTexte.setLocation(70, 240);
@@ -257,7 +257,7 @@ public class VueJetable {
         titreProduitSemaine.setLocation(70, 345);
         titreProduitSemaine.setFont(f);
 
-        String produitTxtSem = "Le produit de la semaine est le \"" + produitSem.getLibelle() + "\" au prix de " + produitSem.getPrix() + " Euros";
+        String produitTxtSem = "Le produit de la semaine est le \"" + produitSem.getLibelle() + "\" au prix de " + produitSem.getPrix() + " €";
         produitDeLaSemaineTexte = new JLabel(produitTxtSem);
         produitDeLaSemaineTexte.setSize(1000, 50);
         produitDeLaSemaineTexte.setLocation(70, 390);
@@ -341,6 +341,7 @@ public class VueJetable {
         title.setFont(f);
         title.setForeground(Color.MAGENTA);*/
         JLabel title = new JLabel("French Chic");
+        title.setLocation(150, 50);
         title.setSize(800, 100);
 
         // set font and color
