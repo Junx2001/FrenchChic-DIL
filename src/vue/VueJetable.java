@@ -28,6 +28,14 @@ import javax.swing.*;
 import controleur.*;
 import metier.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
+import javax.swing.border.LineBorder;
+
 public class VueJetable {
 
     static Session laSession;
@@ -46,8 +54,8 @@ public class VueJetable {
 
     private static void afficherEcranAccueil() {
         frame = new JFrame();
-        frame.setTitle("French Chic - Accueil");
-        frame.setSize(650, 500);
+        frame.setTitle("French Chic - Login");
+        frame.setSize(650, 600);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
@@ -55,40 +63,69 @@ public class VueJetable {
         accueilPanel.setBackground(Color.WHITE);
         frame.setContentPane(accueilPanel);
         frame.setLayout(null);
-        //initialiserPanel();
 
+        //initialiserPanel();
         JLabel title = new JLabel("French Chic");
+        title.setBorder(null); // Remove the border
         title.setLocation(150, 50);
         title.setSize(1000, 100);
-        Font f = new Font("", Font.PLAIN, 70);
-        title.setFont(f);
-        title.setForeground(Color.MAGENTA);
+
+        // set font and color
+        try {
+            Font italianaFont = Font.createFont(Font.TRUETYPE_FONT, new File("././italiana.ttf"));
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(italianaFont);
+
+            Font f = new Font("Italiana", Font.PLAIN, 65);
+            title.setFont(f);
+            title.setForeground(Color.decode("#f77983"));
+        }
+        catch (Exception e) {}
+
 
         JLabel pseudoLabel = null;
         JLabel mdpLabel = null;
 
-        pseudoLabel = new JLabel("Pseudo");
+        pseudoLabel = new JLabel("Pseudo:");
         pseudoLabel.setSize(120, 20);
-        pseudoLabel.setLocation(150, 200);
-        mdpLabel = new JLabel("Mot de passe");
+        pseudoLabel.setLocation(150, 201);
+        Font f = new Font("Calibiri", Font.PLAIN, 18);
+        pseudoLabel.setFont(f);
+
+        mdpLabel = new JLabel("Mot de passe:");
         mdpLabel.setSize(120, 20);
-        mdpLabel.setLocation(150, 250);
+        mdpLabel.setLocation(150, 270);
+        Font mdpFont = new Font("Calibiri", Font.PLAIN, 18);
+        mdpLabel.setFont(mdpFont);
 
         int longueur = 200;
         int largeur = 30;
 
         final JTextField pseudoField;
-        final JTextField mdpField;
+        final JPasswordField mdpField;
 
         pseudoField = new JTextField();
-        pseudoField.setSize(longueur, largeur);
-        pseudoField.setLocation(250, 200);
+        pseudoField.setSize(longueur-16, largeur);
+        pseudoField.setLocation(266, 200);
+        // set border radius
+        pseudoField.setBorder(new RoundBorder(10));
+        pseudoField.setBackground(Color.decode("#EEEEEE"));
+
+
         mdpField = new JPasswordField();
-        mdpField.setSize(longueur, largeur);
-        mdpField.setLocation(250, 250);
+        mdpField.setSize(longueur-17, largeur);
+        mdpField.setLocation(270, 271);
+        // set border radius
+        mdpField.setBorder(new RoundBorder(10));
+        mdpField.setBackground(Color.decode("#EEEEEE"));
+
         JButton login = new JButton("S'identifier");
-        login.setLocation(250, 300);
-        login.setSize(longueur, largeur);
+        login.setLocation(150, 340);
+        login.setSize(longueur+104, largeur+5);
+        // set border radius
+        login.setBorder(new RoundBorder(10));
+        login.setBackground(Color.decode("#FFD5D4"));
+
 
         login.addActionListener(new ActionListener() {
 
@@ -97,8 +134,9 @@ public class VueJetable {
                 // TODO Auto-generated method stub
                 TraiterIdentificationReponse reponse = laSession.traiterIdentification(pseudoField.getText(), mdpField.getText());
                 frame.setVisible(false);
+                System.out.println(reponse.leProduitSemaine);
                 if (reponse.typeEcran == EnumTypeEcran.ECRAN_ACCUEIL_PERSO) {
-                    afficherEcranAccueilPerso(reponse.leClient, reponse.leProduit, reponse.leProduitSemaine);
+                    afficherEcranAccueilPerso(reponse.leClient, reponse.leProduit,reponse.leProduitSemaine);
                 }
             }
         });
@@ -126,32 +164,60 @@ public class VueJetable {
         frame.setLayout(null);
 
         JLabel title = new JLabel("French Chic");
-        title.setLocation(150, 50);
+        title.setLocation(70, 50);
         title.setSize(1000, 100);
-        Font f = new Font("", Font.PLAIN, 70);
-        title.setFont(f);
-        title.setForeground(Color.MAGENTA);
+
+        // set font and color
+        try {
+            Font italianaFont = Font.createFont(Font.TRUETYPE_FONT, new File("././italiana.ttf"));
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(italianaFont);
+
+            Font f = new Font("Italiana", Font.PLAIN, 65);
+            title.setFont(f);
+            title.setForeground(Color.decode("#f77983"));
+        }
+        catch (Exception e) {}
 
         JLabel bonjourTexte = null;
         JLabel produitDuJourTexte = null;
+        JLabel quantiteProduit = null;
         JLabel quantiteLabel = null;
 
         JLabel produitDeLaSemaineTexte = null;
+        JLabel quantiteProduitSemaine = null;
         JLabel quantiteSemLabel = null;
 
         String bonjourTxt = "Bonjour " + client.getPrenom() + " " + client.getNom();
         bonjourTexte = new JLabel(bonjourTxt);
-        bonjourTexte.setSize(250, 20);
-        bonjourTexte.setLocation(150, 200);
+        bonjourTexte.setSize(250, 50);
+        bonjourTexte.setLocation(70, 145);
+        Font f = new Font("Calibiri", Font.PLAIN, 25);
+        bonjourTexte.setFont(f);
+
+        JLabel titreProduitJour = new JLabel("<html><u>Produit du jour</u></html>");
+        titreProduitJour.setForeground(Color.decode("#f77983"));
+        titreProduitJour.setSize(1000, 50);
+        titreProduitJour.setLocation(70, 195);
+        titreProduitJour.setFont(f);
 
         String produitTxt = "Le produit du jour est le \"" + produit.getLibelle() + "\" au prix de " + produit.getPrix() + " Euros";
         produitDuJourTexte = new JLabel(produitTxt);
-        produitDuJourTexte.setSize(800, 20);
-        produitDuJourTexte.setLocation(150, 250);
+        produitDuJourTexte.setSize(1000, 50);
+        produitDuJourTexte.setLocation(70, 240);
+        produitDuJourTexte.setFont(f);
+
+        String quantiteProduitJour = "Quantité en stock: " + produit.getQuantiteEnStock();
+        quantiteProduit = new JLabel(quantiteProduitJour);
+        quantiteProduit.setSize(1000, 50);
+        quantiteProduit.setLocation(70, 270);
+        quantiteProduit.setFont(f);
 
         quantiteLabel = new JLabel("Quantite");
         quantiteLabel.setSize(120, 20);
-        quantiteLabel.setLocation(250, 325);
+        quantiteLabel.setLocation(70, 315);
+        Font textFont = new Font("Calibiri", Font.PLAIN, 18);
+        quantiteLabel.setFont(textFont);
 
         int longueur = 200;
         int largeur = 30;
@@ -159,13 +225,18 @@ public class VueJetable {
         final JTextField quantiteField;
 
         quantiteField = new JTextField();
-        quantiteField.setSize(longueur, largeur);
-        quantiteField.setLocation(320, 320);
-        quantiteField.setSize(50, largeur);
+        quantiteField.setSize(50, 30);
+        quantiteField.setLocation(150, 315);
+        // set border radius
+        quantiteField.setBorder(new RoundBorder(10));
+        quantiteField.setBackground(Color.decode("#EEEEEE"));
 
         JButton ajouterProduit = new JButton("Ajouter le produit du jour au panier");
-        ajouterProduit.setLocation(250, 370);
-        ajouterProduit.setSize(longueur, largeur);
+        ajouterProduit.setLocation(210, 315);
+        ajouterProduit.setSize(150, 30);
+        // set border radius
+        ajouterProduit.setBorder(new RoundBorder(10));
+        ajouterProduit.setBackground(Color.decode("#FFD5D4"));
 
         ajouterProduit.addActionListener(new ActionListener() {
             @Override
@@ -180,26 +251,45 @@ public class VueJetable {
             }
         });
 
+        JLabel titreProduitSemaine = new JLabel("<html><u>Produit de la semaine</u></html>");
+        titreProduitSemaine.setForeground(Color.decode("#f77983"));
+        titreProduitSemaine.setSize(1000, 50);
+        titreProduitSemaine.setLocation(70, 345);
+        titreProduitSemaine.setFont(f);
+
         String produitTxtSem = "Le produit de la semaine est le \"" + produitSem.getLibelle() + "\" au prix de " + produitSem.getPrix() + " Euros";
         produitDeLaSemaineTexte = new JLabel(produitTxtSem);
-        produitDeLaSemaineTexte.setSize(800, 20);
-        produitDeLaSemaineTexte.setLocation(150, 450);
+        produitDeLaSemaineTexte.setSize(1000, 50);
+        produitDeLaSemaineTexte.setLocation(70, 390);
+        produitDeLaSemaineTexte.setFont(f);
+
+        String quantiteProduitSem = "Quantité en stock: " + produit.getQuantiteEnStock();
+        quantiteProduitSemaine = new JLabel(quantiteProduitSem);
+        quantiteProduitSemaine.setSize(1000, 50);
+        quantiteProduitSemaine.setLocation(70, 430);
+        quantiteProduitSemaine.setFont(f);
 
         quantiteSemLabel = new JLabel("Quantite");
         quantiteSemLabel.setSize(120, 20);
-        quantiteSemLabel.setLocation(250, 525);
+        quantiteSemLabel.setLocation(70, 475);
+        quantiteSemLabel.setFont(textFont);
 
 
         final JTextField quantiteFieldSem;
 
         quantiteFieldSem = new JTextField();
-        quantiteFieldSem.setSize(longueur, largeur);
-        quantiteFieldSem.setLocation(320, 520);
-        quantiteFieldSem.setSize(50, largeur);
+        quantiteFieldSem.setSize(50, 30);
+        quantiteFieldSem.setLocation(150, 475);
+        // set border radius
+        quantiteFieldSem.setBorder(new RoundBorder(10));
+        quantiteFieldSem.setBackground(Color.decode("#EEEEEE"));
 
         JButton ajouterProduitSem = new JButton("Ajouter le produit de la semaine au panier");
-        ajouterProduitSem.setLocation(250, 570);
-        ajouterProduitSem.setSize(longueur, largeur);
+        ajouterProduitSem.setLocation(210, 475);
+        ajouterProduitSem.setSize(150, 30);
+        // set border radius
+        ajouterProduitSem.setBorder(new RoundBorder(10));
+        ajouterProduitSem.setBackground(Color.decode("#FFD5D4"));
 
         ajouterProduitSem.addActionListener(new ActionListener() {
             @Override
@@ -217,21 +307,25 @@ public class VueJetable {
         frame.add(title);
         frame.add(bonjourTexte);
         frame.add(produitDuJourTexte);
+        frame.add(quantiteProduit);
         frame.add(quantiteField);
         frame.add(quantiteLabel);
         frame.add(ajouterProduit);
 
+        frame.add(titreProduitSemaine);
         frame.add(produitDeLaSemaineTexte);
+        frame.add(quantiteProduitSemaine);
         frame.add(quantiteFieldSem);
         frame.add(quantiteSemLabel);
         frame.add(ajouterProduitSem);
+        frame.add(titreProduitJour);
         frame.setVisible(true);
     }
 
     private static void afficherEcranPanier(Commande laCommande) {
         frame = new JFrame();
         frame.setTitle("French Chic - Panier");
-        frame.setSize(650, 500);
+        frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
@@ -240,12 +334,30 @@ public class VueJetable {
         frame.setContentPane(accueilPanel);
         frame.setLayout(null);
 
-        JLabel title = new JLabel("Votre Panier");
+        /*JLabel title = new JLabel("Votre Panier");
         title.setLocation(150, 50);
         title.setSize(1000, 100);
         Font f = new Font("", Font.PLAIN, 70);
         title.setFont(f);
-        title.setForeground(Color.MAGENTA);
+        title.setForeground(Color.MAGENTA);*/
+        JLabel title = new JLabel("French Chic");
+        title.setSize(800, 100);
+
+        // set font and color
+        try {
+            Font italianaFont = Font.createFont(Font.TRUETYPE_FONT, new File("././italiana.ttf"));
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(italianaFont);
+
+            Font f = new Font("Italiana", Font.PLAIN, 70);
+            title.setFont(f);
+            title.setForeground(Color.decode("#f77983"));
+        }
+        catch (Exception e) {}
+
+        JLabel subtitle = new JLabel("Vos commandes dans le panier");
+        Font f = new Font("Arial", Font.PLAIN, 33);
+        subtitle.setFont(f);
 
         LigneCommande ligneC = laCommande.getLesLignesCommande().get(0);
         NumberFormat nf = NumberFormat.getInstance(Locale.FRENCH);
@@ -292,15 +404,37 @@ public class VueJetable {
         montantField.setEditable(false);
 
         frame.add(title);
+        frame.add(subtitle);
         frame.add(montantField);
         frame.add(montantLabel);
         frame.add(paneTab);
         frame.setVisible(true);
+
     }
 
     private static void initialize(){
         Client.initializeClients();
         Commande.initializeCommandes();
         Produit.initializeProduits();
+    }
+}
+
+class RoundBorder extends LineBorder {
+    private int cornerRadius;
+
+    public RoundBorder(int cornerRadius) {
+        super(Color.decode("#9C9C9C"));
+        this.cornerRadius = cornerRadius;
+    }
+
+    @Override
+    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        Shape borderShape = new RoundRectangle2D.Double(x, y, width - 1, height - 1, cornerRadius, cornerRadius);
+        g2.setStroke(new BasicStroke(getThickness()));
+        g2.setColor(getLineColor());
+        g2.draw(borderShape);
     }
 }
